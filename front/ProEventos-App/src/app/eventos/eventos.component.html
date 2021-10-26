@@ -1,8 +1,69 @@
-<h1>Eventos do Component</h1>
+<h2>Eventos</h2>
+<hr>
 
-<div *ngFor="let evento of eventos">
-  <p> <b>Tema</b>: {{evento.tema}}</p>
-  <p> <b>Local</b>: {{evento.local}}</p>
-  <hr>
+<div class="row row-cols-lg-auto g-3 align-items-center mb-2">
+  <div class="col-12">
+    <div class="form-group mp-2">
+      <div class="row align-items-center">
+        <div class="col-2">
+          <label>Filtro: </label>
+        </div>
+        <div class="col-10">
+          <input
+        type="text"
+        class="form-control"
+        placeholder="buscar"
+        [(ngModel)]="filtroLista">
+      </div>
+      </div>
+    </div>
+  </div>
 </div>
 
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th  (click)="showImage()">
+        <button type="button" class="btn btn-outline-light btn-sm">
+          {{ showImg ? "Ocultar" : "Exibir" }}
+        </button>
+      </th>
+      <th>#</th>
+      <th>Tema</th>
+      <th>Local</th>
+      <th>Data</th>
+      <th>Qtd participante</th>
+      <th>Lote</th>
+      <th>Opções</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="eventos && eventos.length">
+    <tr *ngFor="let evento of eventosFiltrados">
+      <td>
+        <img [collapse]="showImg" class="" src="assets/{{ evento.imagemURL }}" alt="Imagem do evento"
+          [style.width.px]="widthImg"
+          [style.margin.px]="marginImg"
+          [isAnimated]="true"
+        >
+      </td>
+      <td>{{ evento.eventoId}}</td>
+      <td>{{ evento.tema }}</td>
+      <td>{{ evento.local }}</td>
+      <td>{{ evento.dataEvento }}</td>
+      <td>{{ evento.qtdPessoas }}</td>
+      <td>{{ evento.lote }}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm me-2">Editar</button>
+        <button type="button" class="btn btn-danger btn-sm">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+
+  <tfoot *ngIf="!eventos.length">
+    <tr>
+      <td colspan="8" class="text-center">
+        <h4>Nenhum evento encontrado</h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>
